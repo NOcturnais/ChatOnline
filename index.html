@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        #dialogue {
+            background-color: lightcyan;
+            height: 20em;
+        }
+    </style>
+</head>
+
+<body id="bodi" class="container">
+    <h1 id="titre" class="text-center">My Online Chat</h1>
+    <div class="row justify-content-md-center">
+        <div id="dialogue" class="row col-md-8 m-3">
+
+        </div>
+        <form class="row col-md-8 m-3" action="new-message.php" method="POST">
+            <label for="message">Message</label>
+            <input type="text" id="message" class="form-control" placeholder="Say">
+            <input class="btn btn-success m-3" id="send-message" type="submit" />
+        </form>
+    </div>
+
+
+
+
+
+    <script>
+        let send = document.querySelector('#send-message');
+
+        send.addEventListener("click", function(e) {
+            e.preventDefault();
+
+            let input = document.querySelector('#message');
+            console.log(input.value);
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "new-message.php");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        console.log("succes: " + xhr.responseText);
+                    } else {
+                        console.error("unexpected status:" + xhr.status);
+                        // reponse inginx<meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        console.error(xhr.response);
+                    }
+                }
+            };
+            xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+            xhr.send("message=" + input.value);
+        });
+    </script>
+</body>
+
+</html>
