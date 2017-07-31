@@ -33,6 +33,24 @@
 
 
     <script>
+        let message = [];
+
+
+
+        function display() {
+            let div = document.querySelector('#dialogue');
+            // cette boucle est lequivalent du foreach
+            div.innerHTML = "";
+            for (let m of message) {
+                let p = document.createElement("p");
+                p.classList.add("col-md-7");
+                p.textContent = m;
+                div.appendChild(p);
+            }
+
+        }
+        display();
+
         let send = document.querySelector('#send-message');
 
         send.addEventListener("click", function(e) {
@@ -47,6 +65,8 @@
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         console.log("succes: " + xhr.responseText);
+                        message.push(input.value);
+                        display();
                     } else {
                         console.error("unexpected status:" + xhr.status);
                         // reponse inginx<meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -6,6 +6,8 @@ class Message {
 
   public $message;
 
+  public $timestamps;
+
 function __construct($message){
     $this->message = $message;
 
