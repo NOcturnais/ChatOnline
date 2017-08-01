@@ -9,22 +9,25 @@
     <title>Document</title>
     <style>
         #dialogue {
+            border: 1px solid lightblue;
             background-color: lightcyan;
             height: 20em;
+            overflow-y: scroll;
         }
     </style>
 </head>
 
 <body id="bodi" class="container">
     <h1 id="titre" class="text-center">My Online Chat</h1>
-    <div class="row justify-content-md-center">
-        <div id="dialogue" class="row col-md-8 m-3">
+    <div class="mt-5">
+        <div id="dialogue" class="col-md-10 offset-md-1">
 
         </div>
-        <form class="row col-md-8 m-3" action="new-message.php" method="POST">
+        <form class="col-md-8 offset-md-2 mt-3" action="new-message.php" method="POST">
             <label for="message">Message</label>
             <input type="text" id="message" class="form-control" placeholder="Say">
-            <input class="btn btn-success m-3" id="send-message" type="submit" />
+            <input type="text" id="pseudo" class="form-control" placeholder="Pseudo">
+            <input class="btn btn-success" value=" send" id="send-message" type="submit" />
         </form>
     </div>
 
@@ -34,8 +37,6 @@
 
     <script>
         let message = [];
-
-
 
         function display() {
             let div = document.querySelector('#dialogue');
@@ -56,17 +57,16 @@
         send.addEventListener("click", function(e) {
             e.preventDefault();
 
-            let input = document.querySelector('#message');
-            console.log(input.value);
-
+            let input = document.querySelector('#message').value;
+            let pseudo = document.querySelector('#pseudo').value;
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "new-message.php");
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        console.log("succes: " + xhr.responseText);
-                        message.push(input.value);
-                        display();
+                        console.log(this.response);
+                        // message.push(input);
+                        // display();
                     } else {
                         console.error("unexpected status:" + xhr.status);
                         // reponse inginx<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,7 +75,8 @@
                 }
             };
             xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-            xhr.send("message=" + input.value);
+            xhr.send("message=" + input + "&pseudo=" + pseudo);
+
         });
     </script>
 </body>
