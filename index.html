@@ -8,11 +8,38 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <title>Document</title>
     <style>
+        @font-face {
+            font-family: "robo";
+            src: url('robol.ttf');
+        }
+        
+        p {
+            font-family: "robo";
+            font-size: 1em;
+            ;
+        }
+        
+        h2 {
+            font-family: "robo";
+            font-size: 2em;
+        }
+        
+        #titre {
+            font-family: "robo";
+            font-size: 4em;
+            border-bottom: 1px solid black;
+        }
+        
         #dialogue {
             border: 1px solid lightblue;
             background-color: lightcyan;
             height: 20em;
             overflow-y: scroll;
+        }
+        
+        .label {
+            font-family: "robo";
+            font-size: 2em;
         }
     </style>
 </head>
@@ -25,7 +52,7 @@
         </div>
         <form class="col-md-8 offset-md-2 mt-3" action="new-message.php" method="POST">
             <input type="text" id="pseudo" class="form-control" placeholder="Pseudo">
-            <label for="message">Message</label>
+            <label class="label" for="message">Message</label>
             <input type="text" id="message" class="form-control" placeholder="Say">
             <input class="btn btn-success" value=" send" id="send-message" type="submit" />
         </form>
@@ -99,12 +126,12 @@
                                     h2.classList.add('col-md-7');
                                     h2.textContent = msg[i][3];
                                     div.appendChild(h2);
+                                    div.appendChild(pp);
                                     p.classList.add("col-md-7");
                                     p.textContent = msg[i][1];
                                     div.appendChild(p);
                                     pp.classList.add('col-md-7');
                                     pp.textContent = msg[i][2];
-                                    div.appendChild(pp);
 
 
                                 }
@@ -115,12 +142,12 @@
                                     let pp = document.createElement("pp");
                                     p.classList.add("col-md-7");
                                     p.textContent = msg[i][1];
+                                    pp.textContent = msg[i][2];
                                     h2.textContent = msg[i][3];
                                     h2.classList.add('col-md-7');
                                     div.appendChild(p);
                                     div.appendChild(h2);
                                     pp.classList.add('col-md-7');
-                                    pp.textContent = msg[i][2];
                                     div.appendChild(pp);
                                     lastlength = msg.length;
 
