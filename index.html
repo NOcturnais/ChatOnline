@@ -24,9 +24,9 @@
 
         </div>
         <form class="col-md-8 offset-md-2 mt-3" action="new-message.php" method="POST">
+            <input type="text" id="pseudo" class="form-control" placeholder="Pseudo">
             <label for="message">Message</label>
             <input type="text" id="message" class="form-control" placeholder="Say">
-            <input type="text" id="pseudo" class="form-control" placeholder="Pseudo">
             <input class="btn btn-success" value=" send" id="send-message" type="submit" />
         </form>
     </div>
@@ -50,12 +50,13 @@
             }
 
         }
-        display();
+        // display();
 
         let send = document.querySelector('#send-message');
 
         send.addEventListener("click", function(e) {
             e.preventDefault();
+
 
             let input = document.querySelector('#message').value;
             let pseudo = document.querySelector('#pseudo').value;
@@ -65,6 +66,7 @@
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         console.log(this.response);
+                        document.querySelector("#message").value = "";
                         // message.push(input);
                         // display();
                     } else {
@@ -78,6 +80,60 @@
             xhr.send("message=" + input + "&pseudo=" + pseudo);
 
         });
+
+        setInterval(function request() {
+                let xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            let msg = JSON.parse(this.response);
+                            let div = document.querySelector('#dialogue');
+
+                            if (div.innerHTML = " ") {
+                                let lastlength = msg.length;
+                                for (let i = 0; i < msg.length; i++) {
+                                    let h2 = document.createElement("h2");
+                                    let p = document.createElement("p");
+                                    let pp = document.createElement("pp");
+                                    h2.classList.add('col-md-7');
+                                    h2.textContent = msg[i][3];
+                                    div.appendChild(h2);
+                                    p.classList.add("col-md-7");
+                                    p.textContent = msg[i][1];
+                                    div.appendChild(p);
+                                    pp.classList.add('col-md-7');
+                                    pp.textContent = msg[i][2];
+                                    div.appendChild(pp);
+
+
+                                }
+                            } else {
+                                for (let i = lastlength; i < msg.length; i++) {
+                                    let p = document.createElement("p");
+                                    let h2 = document.createElement("h2");
+                                    let pp = document.createElement("pp");
+                                    p.classList.add("col-md-7");
+                                    p.textContent = msg[i][1];
+                                    h2.textContent = msg[i][3];
+                                    h2.classList.add('col-md-7');
+                                    div.appendChild(p);
+                                    div.appendChild(h2);
+                                    pp.classList.add('col-md-7');
+                                    pp.textContent = msg[i][2];
+                                    div.appendChild(pp);
+                                    lastlength = msg.length;
+
+
+                                }
+                            }
+                        }
+                    }
+                }
+                xhr.open("POST", "msgFromSql.php", true);
+                xhr.send();
+            },
+            400);
     </script>
 </body>
 

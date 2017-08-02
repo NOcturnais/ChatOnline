@@ -24,4 +24,20 @@ class Data {
 
 
     }
+
+    public function ExitToData(){
+         try {
+             $query= $this->db->prepare('SELECT * FROM message ');
+             $query->execute();
+             $tableau = $query->fetchAll();
+             return json_encode($tableau);
+         }catch(Exeption $exeption){
+            echo $exeption->getMessage();
+
+
+    }
+
+         
+
+    }
 }
