@@ -4,7 +4,7 @@ class Data {
 
 
     public function __construct(){
-        $this->db= new pdo('mysql:host=localhost;dbname=Ajax_chat;','ajax-chat-user','ajax');
+        $this->db= new pdo('mysql:host=simplon-db;dbname=thomas_ajax_chat;','thomas','thomas');
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
